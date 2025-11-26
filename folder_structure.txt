@@ -1,0 +1,87 @@
+mosquito_classification/
+│
+├── data/
+│   ├── raw/                     # Raw Chula images (ALL species, untouched)
+│   ├── corpus_four_species/     # Only 4 species you selected (copy or symlink)
+│   ├── external/                # External citizen datasets (Mosquito Alert etc.)
+│   ├── csv/
+│   │   ├── master.csv           # filepath, species, specimen_id, phone, view
+│   │   ├── train.csv
+│   │   ├── val.csv
+│   │   ├── test.csv
+│   └── README.md
+│
+├── configs/
+│   ├── model1_baseline.yaml     # EffNet-B2 baseline config
+│   ├── model2_augmented.yaml    # EffNet-B2 heavy aug config
+│   ├── model3_multiview.yaml    # EffNet-B2 multi-input config
+│   ├── model4_distilled.yaml    # Distilled student config
+│   └── common.yaml              # shared settings (paths, size, normalization)
+│
+├── src/
+│   ├── dataloaders/
+│   │   ├── single_view_loader.py
+│   │   ├── multiview_loader.py
+│   │   ├── transforms.py        # augmentations
+│   │   ├── utils_split.py       # create master.csv + train/val/test split
+│   │
+│   ├── models/
+│   │   ├── efficientnet_b2.py   # EfficientNet-B2 backbone wrapper
+│   │   ├── multiview_efficientnet.py  # shared-weight multi-input model
+│   │   ├── student_mobilenetv3.py     # distilled lightweight model
+│   │
+│   ├── train/
+│   │   ├── train_single.py      # Model 1 and Model 2
+│   │   ├── train_multiview.py   # Model 3
+│   │   ├── train_distill.py     # Model 4 distillation
+│   │   └── trainer_utils.py
+│   │
+│   ├── eval/
+│   │   ├── evaluate.py
+│   │   ├── metrics.py
+│   │   └── confusion_matrix.py
+│   │
+│   ├── inference/
+│   │   ├── predict_single.py    # local testing
+│   │   ├── image_preprocess.py
+│   │   └── export_onnx.py       # export Model 2 or Model 4 to ONNX
+│   │
+│   └── utils/
+│       ├── logger.py
+│       ├── seed.py
+│       ├── paths.py
+│       └── helpers.py
+│
+├── experiments/
+│   ├── model1_baseline/         # logs, weights, graphs
+│   ├── model2_augmented/
+│   ├── model3_multiview/
+│   ├── model4_distilled/
+│   └── comparison_plots/
+│
+├── deployment/
+│   ├── fastapi_app.py           # main inference API
+│   ├── requirements.txt
+│   ├── Dockerfile
+│   └── model_store/
+│       ├── model2_efficientnet_b2.pt
+│       ├── model4_student.pt
+│       ├── model4_student.onnx
+│       └── species_labels.json
+│
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_train_model_examples.ipynb
+│   ├── 03_evaluate_models.ipynb
+│   └── 04_distillation_playground.ipynb
+│
+├── paper/
+│   ├── figures/
+│   ├── tables/
+│   └── drafts/
+│       ├── introduction.md
+│       ├── methods.md
+│       ├── results.md
+│       └── discussion.md
+│
+└── README.md

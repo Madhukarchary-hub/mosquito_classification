@@ -1,0 +1,17 @@
+# Ignore dataset and large files
+data/corpus_four_species/
+data/raw/
+data/external/
+*.png
+*.jpg
+*.jpeg
+*.csv
+
+# Ignore model weights
+*.pth
+models/
+
+# Python cache
+__pycache__/
+*.zip
+*.ipynb_checkpoints/
